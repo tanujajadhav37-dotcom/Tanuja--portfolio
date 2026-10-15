@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tanuja Jadhav | Backend Engineer • Baking Systems That Scale 🧁</title>
+  <meta name="description" content="Portfolio of Tanuja Jadhav, BE 3rd-year Computer Engineering student and Backend Engineer. GoLang, Apache Kafka, Distributed Systems, Cloud & AI/ML (Smart India Hackathon).">
+  <meta name="keywords" content="Tanuja Jadhav, Backend Engineer, GoLang, Kafka, Distributed Systems, Smart India Hackathon, Portfolio, Developer">
+  <meta name="author" content="Tanuja Jadhav">
+
+  <!-- Open Graph / Meta -->
+  <meta property="og:title" content="Tanuja Jadhav | Backend Engineer Portfolio 🧁">
+  <meta property="og:description" content="Backend engineer. Baking systems that scale. Explore distributed systems, SIH projects, and the Useless Software Lab.">
+  <meta property="og:type" content="website">
+
+  <!-- Cupcake SVG Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧁</text></svg>">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="./src/styles/main.css">
+  <link rel="stylesheet" href="./src/styles/components.css">
+
+  <!-- Universal Import Map (Works with Vite, VS Code Live Server, Python http.server, etc.) -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://esm.sh/three@0.162.0",
+      "gsap": "https://esm.sh/gsap@3.12.5",
+      "gsap/ScrollTrigger": "https://esm.sh/gsap@3.12.5/ScrollTrigger",
+      "canvas-confetti": "https://esm.sh/canvas-confetti@1.9.2"
+    }
+  }
+  </script>
+
+  <style>
+    /* Fullscreen background Three.js canvas */
+    #bg-sweets-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.65;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom Dessert Cursor -->
+  <div class="custom-cursor-dot" aria-hidden="true"></div>
+  <div class="custom-cursor-ring" aria-hidden="true"></div>
+
+  <!-- Background 3D Floating Sweets Canvas -->
+  <canvas id="bg-sweets-canvas" aria-hidden="true"></canvas>
+
+  <!-- Frosting Scroll Progress Bar -->
+  <div class="frosting-progress-container">
+    <div id="frosting-progress" class="frosting-progress-bar"></div>
+  </div>
+
+  <!-- 1. Oven Preloader (<1.2s) -->
+  <div id="oven-preloader" class="oven-preloader" aria-live="polite">
+    <div class="oven-box">
+      <div class="oven-window">
+        <div class="oven-glow"></div>
+        <div class="oven-cupcake-emoji">🧁</div>
+      </div>
+    </div>
+    <div class="preloader-text">
+      <span>Preheating the oven to 375°F...</span>
+    </div>
+    <div class="preloader-bar-wrap">
+      <div class="preloader-bar-fill"></div>
+    </div>
+  </div>
+
+  <!-- 2. Sticky Pill-Shaped Navbar -->
+  <header class="bakery-navbar-wrap">
+    <nav class="bakery-navbar" aria-label="Main Navigation">
+      <a href="#hero" class="navbar-brand">
+        <span class="navbar-brand-icon">🧁</span>
+        <span>Tanuja<span class="text-pink">.bakery</span></span>
+      </a>
+
+      <div class="navbar-links" id="navbar-links">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#skills" class="nav-link">Ingredients</a>
+        <a href="#projects" class="nav-link">Menu</a>
+        <a href="#nonsense" class="nav-link">Sweet Nonsense</a>
+        <a href="#timeline" class="nav-link">Recipe</a>
+        <a href="#contact" class="nav-link">Order</a>
+      </div>
+
+      <div class="navbar-actions">
+        <!-- Chocolate mode toggle button -->
+        <button id="theme-toggle" class="theme-toggle-btn" title="Toggle Chocolate Dark Mode" aria-label="Toggle Chocolate Dark Mode">
+          🍪
+        </button>
+
+        <!-- Sound chimes toggle -->
+        <button id="sound-toggle" class="sound-toggle-btn" title="Toggle Bakery Chimes" aria-label="Toggle Sound Effects">
+          🔔
+        </button>
+
+        <!-- Resume quick CTA -->
+        <a href="#contact" class="bakery-btn bakery-btn-sm bakery-btn-primary open-resume-modal">
+          <span>Resume</span> 📄
+        </a>
+
+        <!-- Mobile Menu Toggle -->
+        <button id="mobile-menu-toggle" class="mobile-nav-toggle" aria-label="Toggle Navigation Menu">
+          ☰
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ======================================================================
+       SECTION 1: HERO
+       ====================================================================== -->
+  <section id="hero" class="hero-section">
+    <div class="container hero-grid">
+      <!-- Left Content -->
+      <div class="hero-content">
+        <div class="hero-status-badge">
+          <span class="status-dot-pulse"></span>
+          <span>Fresh out of the oven 🥖 • BE 3rd-Year CS</span>
+        </div>
+
+        <h1 class="hero-title">
+          Tanuja Jadhav <span class="sparkle-icon">✨</span>
+        </h1>
+
+        <div class="hero-typing-wrap">
+          <span class="typing-prefix">I am a</span>
+          <span id="typing-role-text" class="typing-text">Backend Engineer</span>
+        </div>
+
+        <p class="hero-tagline">
+          Backend engineer. Baking systems that scale 🧁. Passionate about low-latency event pipelines, GoLang goroutines, and resilient distributed architectures.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#projects" class="bakery-btn bakery-btn-primary">
+            <span>Taste The Projects</span> 🍰
+          </a>
+          <a href="#contact" class="bakery-btn bakery-btn-secondary open-resume-modal">
+            <span>Get The Recipe (Resume)</span> 📄
+          </a>
+        </div>
+
+        <div class="hero-socials">
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-pill" title="GitHub Profile" aria-label="GitHub">
+            <span>🐙</span>
+          </a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-pill" title="LinkedIn Profile" aria-label="LinkedIn">
+            <span>💼</span>
+          </a>
+          <a href="mailto:tanuja.jadhav@example.com" class="social-pill" title="Send Email" aria-label="Email">
+            <span>💌</span>
+          </a>
+          <a href="https://leetcode.com" target="_blank" rel="noopener noreferrer" class="social-pill" title="LeetCode Profile" aria-label="LeetCode">
+            <span>🧩</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: Interactive 3D Procedural Cupcake Display -->
+      <div class="hero-3d-wrapper">
+        <div class="cupcake-podium"></div>
+        <canvas id="hero-cupcake-canvas" aria-label="Interactive 3D Cupcake"></canvas>
+        <div class="cupcake-speech-bubble" title="Click for extra sprinkles!">
+          <span>Tap for Sprinkles! ✨</span>
+        </div>
+        <!-- WebGL Fallback -->
+        <div class="cupcake-fallback" aria-hidden="true">🧁</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frosting Drip Divider -->
+  <div class="drip-divider drip-divider-bottom" aria-hidden="true">
+    <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <path class="drip-fill-secondary" d="M0,0 C150,90 350,-40 500,70 C650,160 850,20 1000,80 C1100,120 1150,40 1200,60 L1200,120 L0,120 Z"></path>
+    </svg>
+  </div>
+
+  <!-- ======================================================================
+       SECTION 2: ABOUT ("THE BAKER")
+       ====================================================================== -->
+  <section id="about" class="section" style="background-color: var(--bg-secondary);">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">
+          <span>👩‍🍳 The Baker</span>
+        </div>
+        <h2 class="section-title">Behind The Oven Doors</h2>
+        <p class="section-subtitle">
+          Turning algorithmic precision into distributed pipelines and high-throughput backend engines.
+        </p>
+      </div>
+
+      <div class="about-grid">
+        <!-- Left Column: Bio & Philosophy -->
+        <div class="frosted-card about-bio-card">
+          <div id="about-bio-container">
+            <!-- Dynamic paragraphs inserted from data.js -->
+          </div>
+
+          <div class="baker-quote-box">
+            "Scalable backends are just like pastries: precise measurements (DSA), the right oven temperature (Docker & Cloud Infra), and zero-loss leavening queues (Apache Kafka)."
+          </div>
+        </div>
+
+        <!-- Right Column: Stats & Currently Craving -->
+        <div class="about-stats-column">
+          <div id="about-stats-container" class="stats-grid">
+            <!-- Dynamic stats counters rendered from data.js -->
+          </div>
+
+          <div class="craving-card">
+            <h3 class="craving-title">
+              <span>☕ Currently Craving & Baking:</span>
+            </h3>
+            <div class="craving-tags">
+              <span class="craving-chip">Go Goroutines</span>
+              <span class="craving-chip">Kafka Partitions</span>
+              <span class="craving-chip">Raft Consensus</span>
+              <span class="craving-chip">USBL Telemetry</span>
+              <span class="craving-chip">Kubernetes Pods</span>
+              <span class="craving-chip">Low-Latency gRPC</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frosting Drip Divider -->
+  <div class="drip-divider drip-divider-top" aria-hidden="true">
+    <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <path class="drip-fill-primary" d="M0,0 C200,80 400,-20 600,60 C800,140 1000,10 1200,50 L1200,120 L0,120 Z"></path>
+    </svg>
+  </div>
+
+  <!-- ======================================================================
+       SECTION 3: SKILLS ("THE INGREDIENTS")
+       ====================================================================== -->
+  <section id="skills" class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">
+          <span>🌾 The Ingredients</span>
+        </div>
+        <h2 class="section-title">Curated Tech Stack</h2>
+        <p class="section-subtitle">
+          The essential flours, leavening agents, and secret spices powering my backends.
+        </p>
+      </div>
+
+      <!-- 3D Skills Interactive Candy Planet Orbit -->
+      <div class="skills-orbit-container">
+        <canvas id="skills-orbit-canvas" aria-label="3D Interactive Skills Orbit"></canvas>
+        <div class="orbit-overlay-label" id="orbit-selected-label">
+          <span>🪐 Hover or tap orbiting candies to explore ingredients</span>
+        </div>
+      </div>
+
+      <!-- Categorized Ingredient Grid -->
+      <div id="skills-categories-container" class="skills-categories-grid">
+        <!-- Rendered dynamically from data.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Frosting Drip Divider -->
+  <div class="drip-divider drip-divider-bottom" aria-hidden="true">
+    <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <path class="drip-fill-secondary" d="M0,0 C150,70 300,-30 550,60 C750,130 950,20 1200,70 L1200,120 L0,120 Z"></path>
+    </svg>
+  </div>
+
+  <!-- ======================================================================
+       SECTION 4: PROJECTS ("THE MENU")
+       ====================================================================== -->
+  <section id="projects" class="section" style="background-color: var(--bg-secondary);">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">
+          <span>🍰 The Dessert Menu</span>
+        </div>
+        <h2 class="section-title">Fresh Bakes & Systems</h2>
+        <p class="section-subtitle">
+          Featured projects, national hackathon architectures, and high-throughput backend services.
+        </p>
+      </div>
+
+      <!-- Projects Grid (Flagship + Dessert Menu Cards) -->
+      <div id="projects-grid" class="projects-grid">
+        <!-- Dynamically rendered from data.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Frosting Drip Divider -->
+  <div class="drip-divider drip-divider-top" aria-hidden="true">
+    <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <path class="drip-fill-primary" d="M0,0 C220,90 450,-30 700,70 C900,150 1050,30 1200,60 L1200,120 L0,120 Z"></path>
+    </svg>
+  </div>
+
+  <!-- ======================================================================
+       SECTION 5: USELESS SOFTWARE LAB ("SWEET NONSENSE")
+       ====================================================================== -->
+  <section id="nonsense" class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">
+          <span>🧪 Sweet Nonsense</span>
+        </div>
+        <h2 class="section-title">The Useless Software Lab</h2>
+        <p class="section-subtitle">
+          Because why only solve serious problems when you can build hilariously over-engineered software that brings pure joy?
+        </p>
+      </div>
+
+      <!-- Playful Silly Project Cards -->
+      <div id="nonsense-grid" class="nonsense-grid">
+        <!-- Rendered dynamically from data.js -->
+      </div>
+
+      <!-- Interactive Mini-Game Box: Falling Cupcake Catcher -->
+      <div class="minigame-container">
+        <div class="game-header">
+          <div class="game-title-wrap">
+            <h3 class="game-title">🧁 Cupcake Catcher Mini-Game</h3>
+            <p class="game-subtitle">Catch cupcakes, donuts & strawberries! Avoid burnt cookies!</p>
+          </div>
+          <div class="game-scoreboard">
+            <div class="score-badge">Score: <span id="game-score-num" class="score-num">0</span></div>
+            <div class="score-badge">Streak: <span id="game-combo-num" class="text-mint">0x</span></div>
+            <div class="score-badge">High: <span id="game-high-num" class="text-caramel">0</span></div>
+          </div>
+        </div>
+
+        <div class="game-canvas-wrap">
+          <canvas id="cupcake-game-canvas"></canvas>
+          <div id="game-overlay" class="game-overlay-screen">
+            <h4 id="game-overlay-title" class="overlay-title">Ready to Catch? 🍰</h4>
+            <p id="game-overlay-sub" class="overlay-subtitle">Move the bakery box with your mouse or finger to catch falling pastries!</p>
+            <button id="game-start-btn" class="bakery-btn bakery-btn-primary">
+              <span>Start Baking</span> ✨
+            </button>
+          </div>
+        </div>
+        <span class="text-xs text-muted">Controls: Mouse / Touch / Arrow Keys [←] [→]</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frosting Drip Divider -->
+  <div class="drip-divider drip-divider-bottom" aria-hidden="true">
+    <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <path class="drip-fill-secondary" d="M0,0 C180,80 380,-20 620,70 C840,150 1020,30 1200,60 L1200,120 L0,120 Z"></path>
+    </svg>
+  </div>
+
+  <!-- ======================================================================
+       SECTION 6: JOURNEY ("THE RECIPE")
+       ====================================================================== -->
+  <section id="timeline" class="section" style="background-color: var(--bg-secondary);">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">
+          <span>📜 The Recipe</span>
+        </div>
+        <h2 class="section-title">The Engineering Journey</h2>
+        <p class="section-subtitle">
+          How the recipe came together: education, hackathon milestones, and deep dives into systems.
+        </p>
+      </div>
+
+      <!-- Vertical Timeline with Scroll Progress Line -->
+      <div class="timeline-container">
+        <div class="timeline-frosting-line">
+          <div id="timeline-frosting-progress" class="timeline-frosting-progress"></div>
+        </div>
+        <div id="timeline-items-container">
+          <!-- Rendered dynamically from data.js -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frosting Drip Divider -->
+  <div class="drip-divider drip-divider-top" aria-hidden="true">
+    <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <path class="drip-fill-primary" d="M0,0 C160,70 340,-20 580,60 C780,140 980,20 1200,60 L1200,120 L0,120 Z"></path>
+    </svg>
+  </div>
+
+  <!-- ======================================================================
+       SECTION 7: CONTACT ("ORDER HERE")
+       ====================================================================== -->
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">
+          <span>💌 Order Here</span>
+        </div>
+        <h2 class="section-title">Place Your Custom Order</h2>
+        <p class="section-subtitle">
+          Looking for a backend engineer, a hackathon collaborator, or want to discuss Go routines and Kafka over coffee?
+        </p>
+      </div>
+
+      <!-- Bakery Order Slip / Receipt Form -->
+      <div class="order-slip-wrapper">
+        <div class="order-slip-card">
+          <div class="slip-header">
+            <h3 class="slip-header-title">🧁 Tanuja's Bakery Order Slip</h3>
+            <p class="slip-header-sub">Receipt #2026-ENG • Special Inquiries & Collaborations</p>
+          </div>
+
+          <form id="bakery-order-form" class="order-form">
+            <div class="form-group">
+              <label for="order-name" class="form-label">
+                <span>Customer Name:</span>
+              </label>
+              <input type="text" id="order-name" class="form-input" placeholder="e.g., Alex Carter" required>
+            </div>
+
+            <div class="form-group">
+              <label for="order-email" class="form-label">
+                <span>Contact Email:</span>
+              </label>
+              <input type="email" id="order-email" class="form-input" placeholder="alex@company.com" required>
+            </div>
+
+            <div class="form-group">
+              <label for="order-flavor" class="form-label">
+                <span>Pick Your Flavor / Inquiry Type:</span>
+              </label>
+              <select id="order-flavor" class="form-select">
+                <option value="internship">💼 Backend / SRE Internship Offer</option>
+                <option value="hackathon">🏆 Hackathon Teammate Opportunity</option>
+                <option value="coffee">☕ Virtual Coffee & GoLang / Kafka Chat</option>
+                <option value="useless">🧪 Silly / Useless Software Idea</option>
+                <option value="other">✨ General Inquiries</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="order-message" class="form-label">
+                <span>Custom Order Details:</span>
+              </label>
+              <textarea id="order-message" class="form-textarea" placeholder="Tell me about your project, team, or systems idea..." required></textarea>
+            </div>
+
+            <button type="submit" class="bakery-btn bakery-btn-primary" style="width: 100%; justify-content: center;">
+              <span>Send Order to Baker</span> 💌
+            </button>
+          </form>
+
+          <div class="slip-footer-notes">
+            <span>Direct Kitchen Mail: <a href="mailto:tanuja.jadhav@example.com" class="text-pink font-semibold">tanuja.jadhav@example.com</a></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       FOOTER
+       ====================================================================== -->
+  <footer class="bakery-footer">
+    <div class="container footer-content">
+      <p class="footer-tagline">
+        Baked with ❤️, Go goroutines, and a lot of coffee by <strong>Tanuja Jadhav</strong>
+      </p>
+      <p class="footer-sub">
+        No cookies were harmed in the making of this site (okay, maybe a few 🍪) • Konami code friendly!
+      </p>
+      <div class="footer-back-to-top">
+        <a href="#hero" class="bakery-btn bakery-btn-sm bakery-btn-secondary" aria-label="Back to top of page">
+          <span>Back to Oven Top</span> 🧁 ↑
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======================================================================
+       RESUME PREVIEW MODAL
+       ====================================================================== -->
+  <div id="resume-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="resume-modal-title">
+    <div class="modal-box">
+      <button id="close-resume-modal" class="modal-close-btn" aria-label="Close modal">✕</button>
+      <div class="text-center mb-4">
+        <span class="text-3xl">📄</span>
+        <h3 id="resume-modal-title" class="text-2xl font-bold mt-1">Tanuja Jadhav's Recipe Book</h3>
+        <p class="text-sm text-secondary">BE 3rd-Year Computer Engineering • Backend Engineer</p>
+      </div>
+
+      <div class="dessert-spec-box my-4">
+        <div class="spec-item">
+          <span class="spec-label">Core Ingredients:</span>
+          <span class="spec-val">GoLang, Kafka, Docker, PyTorch</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Hackathon Accolade:</span>
+          <span class="spec-val text-pink">Smart India Hackathon Finalist</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Target Roles:</span>
+          <span class="spec-val text-mint">Backend / Distributed Systems Intern</span>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-3 mt-6">
+        <a href="#" id="download-resume-btn" class="bakery-btn bakery-btn-primary" style="width: 100%; justify-content: center;">
+          <span>Download Formal PDF Recipe</span> 📥
+        </a>
+        <a href="#contact" class="bakery-btn bakery-btn-secondary" style="width: 100%; justify-content: center;" onclick="document.getElementById('resume-modal').classList.remove('active');">
+          <span>Message Directly</span> 💌
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Alert -->
+  <div id="bakery-toast" class="bakery-toast" role="status" aria-live="polite">
+    <span id="toast-icon">🧁</span>
+    <span id="toast-message">Welcome to Tanuja's Bakery Portfolio!</span>
+  </div>
+
+  <!-- App Entry Point -->
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
